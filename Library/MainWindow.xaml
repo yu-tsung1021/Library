@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="圖書館系統" Height="450" Width="800">
+    <Grid Background="#FFA3BCDA">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="101*"/>
+            <ColumnDefinition Width="99*"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="1" Content="查詢" HorizontalAlignment="Left" Height="46" Margin="234,16,0,0" VerticalAlignment="Top" Width="99"/>
+        <Label x:Name="___查詢書本詢問句_" Content="請輸入要查詢的書本或作者" HorizontalAlignment="Left" Height="46" Margin="35,16,0,0" VerticalAlignment="Top" Width="192" FontSize="15" Background="#FFF0D3D3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="46" Margin="247,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369" TextChanged="TextBox_TextChanged" VerticalContentAlignment="Center"/>
+        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="243" Margin="35,83,0,0" VerticalAlignment="Top" Width="702"/>
+        <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="71" Margin="35,354,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="702"/>
     </Grid>
 </Window>
