@@ -14,11 +14,10 @@
         <Button Grid.Column="1" Content="查詢" HorizontalAlignment="Left" Height="46" Margin="234,16,0,0" VerticalAlignment="Top" Width="99" FontSize="20" Click="SearchButton_Click"/>
         <Label x:Name="___查詢書本詢問句_" Content="請輸入要查詢的書本或作者" HorizontalAlignment="Left" Height="46" Margin="35,16,0,0" VerticalAlignment="Top" Width="192" FontSize="15" Background="#FFF0D3D3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <TextBox x:Name="QueryTextBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="46" Margin="247,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369" VerticalContentAlignment="Center"/>
-        <TextBlock x:Name="ResultTextBlock" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="94" Margin="35,331,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="702" Background="#FFF4A1A1"/>
+        <TextBlock x:Name="ResultTextBlock" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="94" Margin="35,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="534" Background="#FFF4A1A1"/>
+        <StackPanel x:Name="BooksStackPanel" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="35,180,0,0" VerticalAlignment="Top" Width="634" Height="245"/>
+        <Button Grid.Column="1" Content="還書" HorizontalAlignment="Left" Height="38" Margin="272,264,0,0" VerticalAlignment="Top" Width="96" FontSize="20" Background="#FF86CDD6"/>
+        <Button Grid.Column="1" Content="借書" HorizontalAlignment="Left" Margin="272,217,0,0" VerticalAlignment="Top" Height="42" Width="96"  FontSize="20" Background="#FF86CDD6"/>
+        <Button Grid.Column="1" Content="預約借書" HorizontalAlignment="Left" Margin="272,307,0,0" VerticalAlignment="Top" Height="42" Width="96"  FontSize="20" Background="#FF86CDD6" Click="Button_Click1"/>
     </Grid>
 </Window>
-
-
-
-
-
