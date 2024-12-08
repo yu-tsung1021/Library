@@ -219,18 +219,31 @@ namespace Library
         {
             List<string> selectedBooks = new List<string>();
             List<string> selectedAuthors = new List<string>();
+            bool allNotInLibrary = true;
 
             foreach (StackPanel sp in BooksStackPanel.Children)
             {
                 CheckBox cb = sp.Children[0] as CheckBox;
                 Label lb_book = sp.Children[1] as Label;
                 Label lb_author = sp.Children[2] as Label;
+                Label lb_inLibrary = sp.Children[3] as Label;
 
                 if (cb.IsChecked == true)
                 {
+                    if (lb_inLibrary.Content.ToString().Contains("是"))
+                    {
+                        allNotInLibrary = false;
+                        break;
+                    }
                     selectedBooks.Add(lb_book.Content.ToString().Replace("書本: ", ""));
                     selectedAuthors.Add(lb_author.Content.ToString().Replace("作者: ", ""));
                 }
+            }
+
+            if (!allNotInLibrary)
+            {
+                MessageBox.Show("書本在書庫中，請使用借書功能。");
+                return;
             }
 
             if (selectedBooks.Count > 0)
@@ -243,6 +256,154 @@ namespace Library
                 MessageBox.Show("請選擇至少一本書進行預約。");
             }
         }
+
+        private void Button_Click2(object sender, RoutedEventArgs e)
+        {
+            List<string> selectedBooks = new List<string>();
+            List<string> selectedAuthors = new List<string>();
+            List<int> selectedIndices = new List<int>();
+            bool allInLibrary = true;
+
+            foreach (StackPanel sp in BooksStackPanel.Children)
+            {
+                CheckBox cb = sp.Children[0] as CheckBox;
+                Label lb_book = sp.Children[1] as Label;
+                Label lb_author = sp.Children[2] as Label;
+                Label lb_inLibrary = sp.Children[3] as Label;
+
+                if (cb.IsChecked == true)
+                {
+                    if (lb_inLibrary.Content.ToString().Contains("否"))
+                    {
+                        allInLibrary = false;
+                        break;
+                    }
+                    selectedBooks.Add(lb_book.Content.ToString().Replace("書本: ", ""));
+                    selectedAuthors.Add(lb_author.Content.ToString().Replace("作者: ", ""));
+                    selectedIndices.Add(book.IndexOf(lb_book.Content.ToString().Replace("書本: ", "")));
+                }
+            }
+
+            if (!allInLibrary)
+            {
+                MessageBox.Show("只有書本在書庫中時才可以借書。");
+                return;
+            }
+
+            if (selectedBooks.Count > 0)
+            {
+                MyDocumentViewer2 viewer = new MyDocumentViewer2(selectedBooks, selectedAuthors);
+                viewer.ShowDialog();
+
+                // 更新書庫布林值
+                foreach (int index in selectedIndices)
+                {
+                    inLibrary[index] = !inLibrary[index];
+                }
+
+                // 更新顯示
+                UpdateBooksStackPanel();
+
+                // 將變更回寫到 CSV 檔案中
+                SaveBooksToCsv();
+            }
+            else
+            {
+                MessageBox.Show("請選擇至少一本書進行借書。");
+            }
+        }
+
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> selectedBooks = new List<string>();
+            List<string> selectedAuthors = new List<string>();
+            List<int> selectedIndices = new List<int>();
+            bool allBorrowed = true;
+
+            foreach (StackPanel sp in BooksStackPanel.Children)
+            {
+                CheckBox cb = sp.Children[0] as CheckBox;
+                Label lb_book = sp.Children[1] as Label;
+                Label lb_author = sp.Children[2] as Label;
+                Label lb_inLibrary = sp.Children[3] as Label;
+
+                if (cb.IsChecked == true)
+                {
+                    if (lb_inLibrary.Content.ToString().Contains("是"))
+                    {
+                        allBorrowed = false;
+                        break;
+                    }
+                    selectedBooks.Add(lb_book.Content.ToString().Replace("書本: ", ""));
+                    selectedAuthors.Add(lb_author.Content.ToString().Replace("作者: ", ""));
+                    selectedIndices.Add(book.IndexOf(lb_book.Content.ToString().Replace("書本: ", "")));
+                }
+            }
+
+            if (!allBorrowed)
+            {
+                MessageBox.Show("只有書本在被借閱狀態時才可以還書。");
+                return;
+            }
+
+            if (selectedBooks.Count > 0)
+            {
+                // 更新書庫布林值
+                foreach (int index in selectedIndices)
+                {
+                    inLibrary[index] = !inLibrary[index];
+                }
+
+                // 更新顯示
+                UpdateBooksStackPanel();
+
+                // 將變更回寫到 CSV 檔案中
+                SaveBooksToCsv();
+
+                MessageBox.Show("還書成功！");
+            }
+            else
+            {
+                MessageBox.Show("請選擇至少一本書進行還書。");
+            }
+        }
+
+        private void UpdateBooksStackPanel()
+        {
+            foreach (StackPanel sp in BooksStackPanel.Children)
+            {
+                Label lb_book = sp.Children[1] as Label;
+                Label lb_inLibrary = sp.Children[3] as Label;
+
+                int index = book.IndexOf(lb_book.Content.ToString().Replace("書本: ", ""));
+                lb_inLibrary.Content = $"在書庫: {(inLibrary[index] ? "是" : "否")}";
+            }
+        }
+
+        private void SaveBooksToCsv()
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
+                {
+                    for (int i = 0; i < book.Count; i++)
+                    {
+                        sw.WriteLine($"{book[i]},{name[i]},{(inLibrary[i] ? "0" : "1")}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"無法寫入檔案！錯誤: {ex.Message}");
+            }
+        }
     }
 }
+
+
+
+
+
+
+
 
