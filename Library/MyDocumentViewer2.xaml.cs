@@ -9,12 +9,14 @@ namespace Library
     {
         private List<string> books;
         private List<string> authors;
+        private MainWindow mainWindow;
 
-        public MyDocumentViewer2(List<string> books, List<string> authors)
+        public MyDocumentViewer2(List<string> books, List<string> authors, MainWindow mainWindow)
         {
             InitializeComponent();
             this.books = books;
             this.authors = authors;
+            this.mainWindow = mainWindow;
             DisplayBookInfo(books, authors);
         }
 
@@ -48,6 +50,14 @@ namespace Library
             // 儲存書本資料和名子電話號碼到 txt 檔案
             SaveBorrowingToFile(name, phone);
 
+            // 更新書庫布林值
+            List<int> selectedIndices = new List<int>();
+            foreach (string bookTitle in books)
+            {
+                selectedIndices.Add(mainWindow.GetBooks().IndexOf(bookTitle));
+            }
+            mainWindow.UpdateBookStatus(selectedIndices);
+
             MessageBox.Show($"借閱成功！\n名子: {name}\n電話號碼: {phone}");
             this.Close();
         }
@@ -69,7 +79,4 @@ namespace Library
         }
     }
 }
-
-
-
 

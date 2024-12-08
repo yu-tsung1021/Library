@@ -81,6 +81,21 @@ namespace Library
             }
         }
 
+        public List<string> GetBooks()
+        {
+            return book;
+        }
+
+        public void UpdateBookStatus(List<int> selectedIndices)
+        {
+            foreach (int index in selectedIndices)
+            {
+                inLibrary[index] = !inLibrary[index];
+            }
+            UpdateBooksStackPanel();
+            SaveBooksToCsv();
+        }
+
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string query = QueryTextBox.Text;
@@ -158,7 +173,7 @@ namespace Library
             {
                 Orientation = Orientation.Horizontal,
                 Margin = new Thickness(3),
-                Background = Brushes.LightBlue,
+                Background = Brushes.Transparent, // 設為透明
                 Height = 35,
             };
 
@@ -168,7 +183,7 @@ namespace Library
                 FontFamily = new FontFamily("微軟正黑體"),
                 FontSize = 16,
                 FontWeight = FontWeights.Bold,
-                Foreground = Brushes.Blue,
+                Foreground = Brushes.LightGreen, // 設為淺綠色
                 Width = 60,
                 Margin = new Thickness(5),
                 VerticalContentAlignment = VerticalAlignment.Center,
@@ -180,7 +195,7 @@ namespace Library
                 FontFamily = new FontFamily("微軟正黑體"),
                 FontSize = 16,
                 FontWeight = FontWeights.Bold,
-                Foreground = Brushes.Black,
+                Foreground = Brushes.LightGreen, // 設為淺綠色
                 Width = 200,
                 VerticalContentAlignment = VerticalAlignment.Center,
             };
@@ -191,7 +206,7 @@ namespace Library
                 FontFamily = new FontFamily("微軟正黑體"),
                 FontSize = 16,
                 FontWeight = FontWeights.Bold,
-                Foreground = Brushes.Black,
+                Foreground = Brushes.LightGreen, // 設為淺綠色
                 Width = 200,
                 VerticalContentAlignment = VerticalAlignment.Center,
             };
@@ -202,7 +217,7 @@ namespace Library
                 FontFamily = new FontFamily("微軟正黑體"),
                 FontSize = 16,
                 FontWeight = FontWeights.Bold,
-                Foreground = Brushes.Black,
+                Foreground = Brushes.LightGreen, // 設為淺綠色
                 Width = 100,
                 VerticalContentAlignment = VerticalAlignment.Center,
             };
@@ -292,20 +307,8 @@ namespace Library
 
             if (selectedBooks.Count > 0)
             {
-                MyDocumentViewer2 viewer = new MyDocumentViewer2(selectedBooks, selectedAuthors);
+                MyDocumentViewer2 viewer = new MyDocumentViewer2(selectedBooks, selectedAuthors, this);
                 viewer.ShowDialog();
-
-                // 更新書庫布林值
-                foreach (int index in selectedIndices)
-                {
-                    inLibrary[index] = !inLibrary[index];
-                }
-
-                // 更新顯示
-                UpdateBooksStackPanel();
-
-                // 將變更回寫到 CSV 檔案中
-                SaveBooksToCsv();
             }
             else
             {
@@ -399,11 +402,5 @@ namespace Library
         }
     }
 }
-
-
-
-
-
-
 
 

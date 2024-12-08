@@ -8,4 +8,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="istockphoto-1453920312-612x612 %281%29.jpg" />
+    <None Remove="pngtree-large-library-with-wooden-bookshelves-and-wooden-floors-with-a-dark-image_2642910.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="istockphoto-1453920312-612x612 (1).jpg" />
+    <Resource Include="pngtree-large-library-with-wooden-bookshelves-and-wooden-floors-with-a-dark-image_2642910.jpg" />
+  </ItemGroup>
+
 </Project>
