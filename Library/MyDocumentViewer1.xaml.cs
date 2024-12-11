@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -20,7 +21,7 @@ namespace Library
 
         private void DisplayBookInfo(List<string> books, List<string> authors)
         {
-            BookInfoLabel.Content = "你要預約借閱的書是:\n";
+            BookInfoLabel.Content = "你要預約的書是:\n";
             for (int i = 0; i < books.Count; i++)
             {
                 BookInfoLabel.Content += $"書本: {books[i]}, 作者: {authors[i]}\n";
@@ -45,30 +46,37 @@ namespace Library
                 return;
             }
 
-            // 儲存書本資料和名子電話號碼到 txt 檔案
+            // 儲存預約資料到 txt 檔案
             SaveReservationToFile(name, phone);
 
-            MessageBox.Show($"預約成功！\n名子: {name}\n電話號碼: {phone}");
+            MessageBox.Show($"預約成功！\n名子: {name}\n電話號碼: {phone}\n預約時間: {DateTime.Now}");
             this.Close();
         }
 
         private void SaveReservationToFile(string name, string phone)
         {
-            string fileName = "預約借書.txt";
-            using (StreamWriter sw = new StreamWriter(fileName, true))
+            string directoryPath = @"C:\Users\qwert\OneDrive\文件\library專題\Library";
+            string fileName = "預約.txt";
+            string filePath = Path.Combine(directoryPath, fileName);
+
+            // 確保目錄存在
+            if (!Directory.Exists(directoryPath))
             {
-                sw.WriteLine("預約借書資料：");
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            using (StreamWriter sw = new StreamWriter(filePath, true))
+            {
+                sw.WriteLine("預約資料：");
                 for (int i = 0; i < books.Count; i++)
                 {
                     sw.WriteLine($"書本: {books[i]}, 作者: {authors[i]}");
                 }
                 sw.WriteLine($"名子: {name}");
                 sw.WriteLine($"電話號碼: {phone}");
-                sw.WriteLine($"提交時間: {DateTime.Now}"); // 紀錄提交時間
+                sw.WriteLine($"預約時間: {DateTime.Now}");
                 sw.WriteLine("----------");
             }
         }
     }
 }
-
-

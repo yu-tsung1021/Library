@@ -31,9 +31,14 @@ namespace Library
         {
             foreach (int index in selectedIndices)
             {
-                inLibrary[index] = false;
-                returnDates[index] = returnDate; // 更新還書時間
+                if (index >= 0 && index < inLibrary.Count)
+                {
+                    inLibrary[index] = !inLibrary[index]; // 更新書本狀態為相反
+                    returnDates[index] = returnDate; // 設定還書時間
+                }
             }
+            UpdateBooksStackPanel(); // 重新繪製書本列表
+            SaveBooksToCsv(); // 保存變更到 CSV 檔案
         }
 
         private void SelectFile()
@@ -282,6 +287,7 @@ namespace Library
                 MessageBox.Show("請選擇至少一本書進行預約。");
             }
         }
+
 
         private void Button_Click2(object sender, RoutedEventArgs e)
         {

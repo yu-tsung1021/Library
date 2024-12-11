@@ -67,10 +67,21 @@ namespace Library
 
 
 
+
+
         private void SaveBorrowingToFile(string name, string phone)
         {
+            string directoryPath = @"C:\Users\qwert\OneDrive\文件\library專題\Library";
             string fileName = "借書.txt";
-            using (StreamWriter sw = new StreamWriter(fileName, true))
+            string filePath = Path.Combine(directoryPath, fileName);
+
+            // 確保目錄存在
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            using (StreamWriter sw = new StreamWriter(filePath, true))
             {
                 sw.WriteLine("借書資料：");
                 for (int i = 0; i < books.Count; i++)
@@ -84,6 +95,7 @@ namespace Library
                 sw.WriteLine("----------");
             }
         }
+
     }
 }
 
