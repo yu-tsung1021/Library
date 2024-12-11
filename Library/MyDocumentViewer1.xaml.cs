@@ -64,6 +64,7 @@ namespace Library
                 }
                 sw.WriteLine($"名子: {name}");
                 sw.WriteLine($"電話號碼: {phone}");
+                sw.WriteLine($"提交時間: {DateTime.Now}"); // 紀錄提交時間
                 sw.WriteLine("----------");
             }
         }

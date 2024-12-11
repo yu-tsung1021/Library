@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -56,9 +57,10 @@ namespace Library
             {
                 selectedIndices.Add(mainWindow.GetBooks().IndexOf(bookTitle));
             }
-            mainWindow.UpdateBookStatus(selectedIndices);
+            DateTime returnDate = DateTime.Now.AddDays(14); // 計算還書時間
+            mainWindow.UpdateBookStatus(selectedIndices, returnDate);
 
-            MessageBox.Show($"借閱成功！\n名子: {name}\n電話號碼: {phone}");
+            MessageBox.Show($"借閱成功！\n名子: {name}\n電話號碼: {phone}\n借書時間: {DateTime.Now}\n還書時間: {DateTime.Now.AddDays(14)}");
             this.Close();
         }
 
@@ -74,9 +76,12 @@ namespace Library
                 }
                 sw.WriteLine($"名子: {name}");
                 sw.WriteLine($"電話號碼: {phone}");
+                sw.WriteLine($"提交時間: {DateTime.Now}");
+                sw.WriteLine($"還書時間: {DateTime.Now.AddDays(14)}");// 紀錄提交時間
                 sw.WriteLine("----------");
             }
         }
     }
 }
+
 

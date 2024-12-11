@@ -68,12 +68,12 @@ namespace Library
                     }
                 }
 
-                // 顯示讀取的書本資料
-                // ResultTextBlock.Text = "讀取的書本資料:\n";
-                // for (int i = 0; i < book.Count; i++)
-                // {
-                //     ResultTextBlock.Text += $"書本: {book[i]}, 作者: {name[i]}, 在書庫: {(inLibrary[i] ? "是" : "否")}\n";
-                // }
+                /* 顯示讀取的書本資料
+                 ResultTextBlock.Text = "讀取的書本資料:\n";
+                 for (int i = 0; i < book.Count; i++)
+                 {
+                     ResultTextBlock.Text += $"書本: {book[i]}, 作者: {name[i]}, 在書庫: {(inLibrary[i] ? "是" : "否")}\n";
+                 }*/
             }
             catch (Exception ex)
             {
