@@ -16,12 +16,24 @@ namespace Library
         private List<string> book = new List<string>();
         private List<string> name = new List<string>();
         private List<bool> inLibrary = new List<bool>();
-
+        private List<DateTime?> returnDates = new List<DateTime?>(); // 新增還書時間的變數
         public MainWindow()
         {
             InitializeComponent();
             SelectFile();
             LoadBooks();
+            for (int i = 0; i < book.Count; i++)
+            {
+                returnDates.Add(null);
+            }
+        }
+        public void UpdateBookStatus(List<int> selectedIndices, DateTime returnDate)
+        {
+            foreach (int index in selectedIndices)
+            {
+                inLibrary[index] = false;
+                returnDates[index] = returnDate; // 更新還書時間
+            }
         }
 
         private void SelectFile()
@@ -35,7 +47,6 @@ namespace Library
             if (result == true)
             {
                 filePath = openFileDialog.FileName;
-                MessageBox.Show($"已選擇檔案: {filePath}");
             }
             else
             {

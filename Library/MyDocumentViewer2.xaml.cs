@@ -58,11 +58,14 @@ namespace Library
                 selectedIndices.Add(mainWindow.GetBooks().IndexOf(bookTitle));
             }
             DateTime returnDate = DateTime.Now.AddDays(14); // 計算還書時間
-            mainWindow.UpdateBookStatus(selectedIndices, returnDate);
+            mainWindow.UpdateBookStatus(selectedIndices, returnDate); // 修改這行
 
             MessageBox.Show($"借閱成功！\n名子: {name}\n電話號碼: {phone}\n借書時間: {DateTime.Now}\n還書時間: {DateTime.Now.AddDays(14)}");
             this.Close();
         }
+
+
+
 
         private void SaveBorrowingToFile(string name, string phone)
         {
